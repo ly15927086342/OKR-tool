@@ -1,0 +1,19 @@
+{
+	"pages": [ //pages数组中第一项表示应用启动页，参考：https://uniapp.dcloud.io/collocation/pages
+		{
+			"path": "pages/index/index",
+			"style": {
+				"navigationBarTitleText": "OKR生成工具",
+				"app-plus":{
+					"titleNView":false
+				}
+			}
+		}
+    ],
+	"globalStyle": {
+		"navigationBarTextStyle": "black",
+		"navigationBarTitleText": "OKR生成工具",
+		"navigationBarBackgroundColor": "#f0f5f9",
+		"backgroundColor": "#f0f5f9"
+	}
+}
