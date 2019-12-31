@@ -15,6 +15,7 @@
 <style>
 	/*每个页面公共css */
 	@import url("./common/all.css");
+	@import url("./common/tuesday.min.css");
 	
 	page{
 		height: 100%;
