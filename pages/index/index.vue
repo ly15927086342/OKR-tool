@@ -212,9 +212,9 @@
 		onLoad() {
 			let res = uni.getSystemInfoSync();
 			console.log(res)
-			this.canvasHeight = res.windowHeight * 0.75 / this.canvasMaxHeight * this.canvasMaxWidth > res.windowWidth ? res.windowWidth /
-				this.canvasMaxWidth * this.canvasMaxHeight : res.windowHeight * 0.75;
-			this.canvasWidth = this.canvasHeight / this.canvasMaxHeight * this.canvasMaxWidth;
+			this.canvasHeight = res.windowHeight * 0.75 / this.canvasMaxHeight * this.canvasMaxWidth > res.windowWidth ? Math.round(res.windowWidth /
+				this.canvasMaxWidth * this.canvasMaxHeight) : Math.round(res.windowHeight * 0.75);
+			this.canvasWidth = Math.round(this.canvasHeight / this.canvasMaxHeight * this.canvasMaxWidth);
 			this.isWeiXin = isWeiXin();
 			// innerAudioContext.autoplay = true;
 			innerAudioContext.loop = true; //循环播放
@@ -383,8 +383,8 @@
 			writeText(ctx, align, color, size, content, left, top) {
 				ctx.setTextAlign(align)
 				ctx.setFillStyle(color)
-				ctx.setFontSize(size / this.canvasMaxWidth * this.canvasWidth)
-				ctx.fillText(content, left / this.canvasMaxWidth * this.canvasWidth, top / this.canvasMaxWidth * this.canvasWidth)
+				ctx.setFontSize(Math.round(size / this.canvasMaxWidth * this.canvasWidth))
+				ctx.fillText(content, Math.round(left / this.canvasMaxWidth * this.canvasWidth), Math.round(top / this.canvasMaxWidth * this.canvasWidth))
 			}
 		}
 	}
