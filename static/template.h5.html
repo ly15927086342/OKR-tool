@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+	<head>
+		<meta charset="utf-8">
+		<meta http-equiv="X-UA-Compatible" content="IE=edge">
+		<meta http-equiv=X-UA-Compatible content="IE=edge">
+		<meta name="keywords" content="OKR,OKR工具,OKR海报,个人OKR海报生成">
+		<meta name="description" content="一款自动生成个人OKR海报的手机H5工具">
+		<meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+		<title>
+			<%= htmlWebpackPlugin.options.title %>
+		</title>
+		<script>
+			document.addEventListener('DOMContentLoaded', function() {
+				document.documentElement.style.fontSize = document.documentElement.clientWidth / 20 + 'px'
+			})
+		</script>
+		<link rel="icon" type="image/x-icon" href="<%= BASE_URL %>static/favicon.ico" />
+		<link rel="stylesheet" href="<%= BASE_URL %>static/index.css" />
+		<script>
+			var _hmt = _hmt || [];
+			(function() {
+				var hm = document.createElement("script");
+				hm.src = "https://hm.baidu.com/hm.js?6d8a7c15add62425702f53549a214217";
+				var s = document.getElementsByTagName("script")[0];
+				s.parentNode.insertBefore(hm, s);
+			})();
+		</script>
+	</head>
+	<body>
+		<noscript>
+			<strong>Please enable JavaScript to continue.</strong>
+		</noscript>
+		<div id="app"></div>
+		<!-- built files will be auto injected -->
+	</body>
+</html>

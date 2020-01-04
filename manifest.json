@@ -84,6 +84,7 @@
                 "enable" : true
             }
         },
-        "domain" : "railwayhs.cn"
+        "domain" : "railwayhs.cn",
+        "template" : "static/template.h5.html"
     }
 }
