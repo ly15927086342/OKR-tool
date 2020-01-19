@@ -73,15 +73,17 @@
     },
     "h5" : {
         "devServer" : {
-            "port" : 8080
+            "port" : "",
+            "https" : false
         },
         "title" : "OKR生成工具",
         "router" : {
-            "mode" : "history"
+            "mode" : "hash",
+            "base" : "/OKR/"
         },
         "optimization" : {
             "treeShaking" : {
-                "enable" : true
+                "enable" : false
             }
         },
         "domain" : "railwayhs.cn",

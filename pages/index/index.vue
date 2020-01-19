@@ -1,6 +1,6 @@
 <template>
 	<view class="content">
-		<view class="flex-row center-center player" :class="playing? 'playing':'none'" @click="playing = !playing">
+		<view class="flex-row center-center player playing" :class="playing?'none':'keepgo'" @click="playing = !playing">
 			<image v-if="playing" src="../../static/音乐开.png" style="width: 50rpx;height: 50rpx;"></image>
 			<image v-else src="../../static/音乐关.png" style="width: 50rpx;height: 50rpx;"></image>
 		</view>
@@ -31,7 +31,7 @@
 				</view>
 				<view class="chr-intro-zh animated tdFadeIn">基于数值的期望描述能够产生可量化、可评分的结果。</view>
 			</view>
-			<image class="btn-img animated tdPlopInUp" mode="aspectFill" src="../../static/开始.png" @click="next"></image>
+			<image class="btn-img animated tdPlopInUp" src="../../static/开始.png" @click="next"></image>
 		</view>
 		<view v-else-if="page == 1" class="content animated">
 			<view style="width: 100%;margin-top: 20rpx;">
@@ -54,10 +54,10 @@
 							<view style="margin-right: 20rpx;color: #c9d6de;">{{index+1}}</view>
 							<input type="text" placeholder="不超过20字" v-model="kr.value" style="flex: 1;" maxlength="20" @blur="checkArray" />
 							<image v-if="key_res.length > 1" src="../../static/移除.png" style="height: 40rpx;width: 40rpx;margin-left: 20rpx;"
-							 mode="aspectFill" @click="remove(index)"></image>
+							 @click="remove(index)"></image>
 						</view>
 						<view v-if="key_res.length == 5" style="color: #c9d6de;font-size: 30rpx;">最多设置五条关键结果</view>
-						<image v-else-if="hasEmpty" src="../../static/添加.png" style="height: 40rpx;width: 40rpx;" mode="aspectFill"
+						<image v-else-if="hasEmpty" src="../../static/添加.png" style="height: 40rpx;width: 40rpx;"
 						 @click="add"></image>
 					</view>
 				</view>
@@ -72,8 +72,8 @@
 				</view>
 			</view>
 			<view class='btn'>
-				<image class="btn-img animated tdFadeInRight" mode="aspectFill" src="../../static/上一步.png" @click="back"></image>
-				<image class="btn-img animated tdFadeInLeft" mode="aspectFill" src="../../static/下一步.png" @click="next"></image>
+				<image class="btn-img animated tdFadeInRight" src="../../static/上一步.png" @click="back"></image>
+				<image class="btn-img animated tdFadeInLeft" src="../../static/下一步.png" @click="next"></image>
 			</view>
 		</view>
 		<view v-else-if="page == 2" class="content animated">
@@ -96,7 +96,7 @@
 						<view class="flex-column center-center child" v-for="(item,index) in background" :key="index" @click="chooseIt(index)">
 							<view class="animated" :class="chooseId == index ? 'tdSwingIn' : 'none'" :style="{backgroundColor:item.color}"
 							 style="border-radius: 30rpx;height: 18vw;width: 18vw;position: relative;">
-								<image v-if="chooseId == index" :src="icon.check" mode="aspectFit" style="position: absolute;right: 15rpx;bottom: 15rpx;width: 30rpx;height: 30rpx;"></image>
+								<image v-if="chooseId == index" :src="icon.check" style="position: absolute;right: 15rpx;bottom: 15rpx;width: 30rpx;height: 30rpx;"></image>
 							</view>
 							<view style="font-size: 25rpx;color: #707070;line-height: 2.5;">{{item.name}}</view>
 						</view>
@@ -104,8 +104,8 @@
 				</view>
 			</view>
 			<view class='btn'>
-				<image class="btn-img animated tdFadeInRight" mode="aspectFill" src="../../static/上一步.png" @click="back"></image>
-				<image class="btn-img animated tdFadeInLeft" mode="aspectFill" src="../../static/生成.png" @click="makePic"></image>
+				<image class="btn-img animated tdFadeInRight" src="../../static/上一步.png" @click="back"></image>
+				<image class="btn-img animated tdFadeInLeft" src="../../static/生成.png" @click="makePic"></image>
 			</view>
 		</view>
 		<view v-else class="content animated" style="width: 100%;overflow: hidden;height: 100%;">
@@ -121,12 +121,12 @@
 					</view>
 					<canvas v-if="load" id="shareCanvas" canvas-id="shareCanvas" :style="{height: canvasHeight+'px',width: canvasWidth+'px'}"></canvas>
 					<image v-else style="z-index: 1000;" :src="canvasBase" :style="{height: canvasHeight+'px',width: canvasWidth+'px'}"
-					 mode="aspectFit"></image>
+					></image>
 				</view>
 			</view>
 			<view class="flex-row center-center animated tdShrinkInBounce" style="height: 10%;">
-				<image src="../../static/back.png" class="btn-last" mode="aspectFill" @click="back" style="margin-right:60rpx;"></image>
-				<!-- <image src="../../static/download.png" class="btn-last" mode="aspectFill" @click="download"></image> -->
+				<image src="../../static/back.png" class="btn-last" @click="back" style="margin-right:60rpx;"></image>
+				<!-- <image src="../../static/download.png" class="btn-last" @click="download"></image> -->
 				<view style="color: #c9d6de;font-size: 30rpx;">长按图片，保存或分享</view>
 			</view>
 			<view class="flex-column center-center" style="height: 10%;font-size: 25rpx;color: #c9d6de;">
@@ -139,18 +139,18 @@
 
 <script>
 	import check from '../../static/check.js'
-	const innerAudioContext = uni.createInnerAudioContext();
+	var innerAudioContext = null;
 
 	//是否微信打开
-	function isWeiXin() {
-		var ua = window.navigator.userAgent.toLowerCase();
-		console.log(ua); //mozilla/5.0 (iphone; cpu iphone os 9_1 like mac os x) applewebkit/601.1.46 (khtml, like gecko)version/9.0 mobile/13b143 safari/601.1
-		if (ua.match(/MicroMessenger/i) == 'micromessenger') {
-			return true;
-		} else {
-			return false;
-		}
-	}
+	// function isWeiXin() {
+	// 	var ua = window.navigator.userAgent.toLowerCase();
+	// 	console.log(ua); //mozilla/5.0 (iphone; cpu iphone os 9_1 like mac os x) applewebkit/601.1.46 (khtml, like gecko)version/9.0 mobile/13b143 safari/601.1
+	// 	if (ua.match(/MicroMessenger/i) == 'micromessenger') {
+	// 		return true;
+	// 	} else {
+	// 		return false;
+	// 	}
+	// }
 
 	export default {
 		data() {
@@ -203,29 +203,33 @@
 				canvasMaxWidth: 600,
 				canvasWidth: 600,
 				canvasHeight: 1167,
-				isWeiXin: false,
+				// isWeiXin: false,
 				load: true,
 				canvasBase: '',
 				playing: false,
 			}
 		},
 		onLoad() {
+			innerAudioContext = uni.createInnerAudioContext();
 			let res = uni.getSystemInfoSync();
 			console.log(res)
-			this.canvasHeight = res.windowHeight * 0.75 / this.canvasMaxHeight * this.canvasMaxWidth > res.windowWidth ? Math.round(res.windowWidth /
+			this.canvasHeight = res.windowHeight * 0.75 / this.canvasMaxHeight * this.canvasMaxWidth > res.windowWidth ? Math.round(
+				res.windowWidth /
 				this.canvasMaxWidth * this.canvasMaxHeight) : Math.round(res.windowHeight * 0.75);
 			this.canvasWidth = Math.round(this.canvasHeight / this.canvasMaxHeight * this.canvasMaxWidth);
-			this.isWeiXin = isWeiXin();
-			// innerAudioContext.autoplay = true;
+			// this.isWeiXin = isWeiXin();
+			innerAudioContext.autoplay = true;
 			innerAudioContext.loop = true; //循环播放
 			innerAudioContext.src = '../../static/飘向北方.mp3';
 			innerAudioContext.onPlay(() => {
 				console.log('开始播放');
+				this.playing = !innerAudioContext.paused;
 			});
 			innerAudioContext.onError((res) => {
 				console.log(res.errMsg);
 				console.log(res.errCode);
 			});
+			console.log(innerAudioContext)
 		},
 		watch: {
 			'playing': function(newd, old) {
@@ -234,7 +238,7 @@
 				} else { //暂停播放
 					innerAudioContext.pause();
 				}
-			}
+			},
 		},
 		computed: {
 			hasEmpty() {
@@ -384,8 +388,19 @@
 				ctx.setTextAlign(align)
 				ctx.setFillStyle(color)
 				ctx.setFontSize(Math.round(size / this.canvasMaxWidth * this.canvasWidth))
-				ctx.fillText(content, Math.round(left / this.canvasMaxWidth * this.canvasWidth), Math.round(top / this.canvasMaxWidth * this.canvasWidth))
+				ctx.fillText(content, Math.round(left / this.canvasMaxWidth * this.canvasWidth), Math.round(top / this.canvasMaxWidth *
+					this.canvasWidth))
 			}
 		}
 	}
 </script>
+
+<style>
+	.playing {
+		animation: run 10s linear 0s infinite;
+	}
+	.keepgo {
+		animation-play-state: paused;
+	}
+	
+</style>
