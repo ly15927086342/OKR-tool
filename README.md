@@ -4,7 +4,7 @@
 
 # OKRtool
 
-An H5 tool for personal OKR(objective and key results method) poster making, it work well in your mobile browser. You can visit it from [here](https://railwayhs.cn)
+An H5 tool for personal OKR(objective and key results method) poster making, it work well in your mobile browser. You can visit it from [here](https://railwayhs.cn/okr)
 
 ## idea
 
